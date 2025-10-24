@@ -13,7 +13,7 @@
   <!-- Other module inherits                                      -->
 
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='org.insset.client.calculatorInsset' />
+<entry-point class='org.insset.client.CalculatorInsset'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client' />
