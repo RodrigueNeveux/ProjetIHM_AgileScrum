@@ -1,0 +1,11 @@
+# Fichiers et dossiers générés par Maven
+target/
+
+# Fichiers de configuration IDE (si vous utilisez Netbeans, Visual Studio Code, etc.)
+*.iml
+.idea/
+.DS_Store
+
+# Fichiers générés par GWT
+*.cache.html
+*.nocache.js
