@@ -11,6 +11,19 @@ public class RomanConverterTest {
 // Initialisation de la classe de production à tester
     private RomanConverter converter = new RomanConverter();
 
+@Test
+    public void testConvertIntegerToNine() {
+        // TDD Etape 1 : Définir ce que l'on attend pour le cas '9' (soustraction)
+        String expectedRoman = "IX";
+        int number = 9;
+
+        // Le code de production actuel va retourner 'null' car il ne gère pas '9' explicitement.
+        String actualRoman = converter.convertIntegerToRoman(number);
+
+        // Assert: Le test doit échouer (expected:<IX> but was:<null>)
+        assertEquals(expectedRoman, actualRoman);
+    }
+
     @Test
     public void testConvertIntegerToOne() {
         // Test vérifiant la conversion 1 -> I
