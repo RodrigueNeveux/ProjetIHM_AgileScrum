@@ -12,6 +12,19 @@ public class RomanConverterTest {
     private RomanConverter converter = new RomanConverter();
 
 @Test
+    public void testConvertIntegerToTwelve() {
+        // TDD Etape 1 : Définir ce que l'on attend pour le cas '12' (X + II)
+        String expectedRoman = "XII";
+        int number = 12;
+
+        // Le code de production actuel ne gère pas la combinaison et va retourner 'null'.
+        String actualRoman = converter.convertIntegerToRoman(number);
+
+        // Assert: Le test doit échouer (expected:<XII> but was:<null>)
+        assertEquals(expectedRoman, actualRoman);
+    }
+
+@Test
     public void testConvertIntegerToNine() {
         // TDD Etape 1 : Définir ce que l'on attend pour le cas '9' (soustraction)
         String expectedRoman = "IX";

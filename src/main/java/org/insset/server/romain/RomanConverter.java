@@ -2,39 +2,28 @@ package org.insset.server.romain;
 
 public class RomanConverter {
 
-    public String convertIntegerToRoman(int number) {
-        // TDD Etape 3 : Écrire le code minimal pour faire passer TOUS les tests
+    // Define the values and their corresponding symbols in descending order
+    // This supports combining units (10 + 2) and subtraction rules (9, 4).
+    private static final int[] VALUES = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+    private static final String[] SYMBOLS = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
-        // NEW: Handles the new subtraction case '9' (testConvertIntegerToNine)
-        if (number == 9) {
-            return "IX"; 
-        }
-// Handles mapping case '10' (existing test)
-        if (number == 10) {
-            return "X"; 
+public String convertIntegerToRoman(int number) {
+        // TDD Etape 3 : Implémenter l'algorithme général pour passer TOUS les 7 tests
+
+        // --- Boundary Check (Future enhancement, but good for structure) ---
+        if (number <= 0 || number > 2000) {
+            // NOTE: We return a string here, but future TDD should verify error messages.
+            return null; 
         }
 
-        // Handles subtraction case '4' (existing test)
-        if (number == 4) {
-            return "IV";
-        }
-// Handles mapping case '5' (existing test)
-        if (number == 5) {
-            return "V";
-        }
-        
-        // Handles repetition cases '1', '2', '3' (existing test logic)
-        if (number >= 1 && number <= 3) {
-            StringBuilder roman = new StringBuilder();
-            int remaining = number;
-while (remaining >= 1) {
-                roman.append("I");
-                remaining -= 1;
+        StringBuilder result = new StringBuilder();
+// Greedy algorithm: subtract the largest possible value until the number is 0
+        for (int i = 0; i < VALUES.length; i++) {
+            while (number >= VALUES[i]) {
+                result.append(SYMBOLS[i]);
+                number -= VALUES[i];
             }
-            return roman.toString();
         }
-
-        // Cas non gérés
-        return null; 
+return result.toString();
     }
 }
