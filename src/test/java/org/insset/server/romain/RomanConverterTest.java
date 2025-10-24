@@ -28,6 +28,19 @@ public class RomanConverterTest {
     }
 
 @Test
+    public void testConvertIntegerToTen() {
+        // TDD Etape 1 : Définir ce que l'on attend pour le cas '10'
+        String expectedRoman = "X";
+        int number = 10;
+
+        // Le code de production actuel ne gère que 1-5, donc il va retourner 'null'.
+        String actualRoman = converter.convertIntegerToRoman(number);
+
+        // Assert: Le test doit échouer (expected:<X> but was:<null>)
+        assertEquals(expectedRoman, actualRoman);
+    }
+
+@Test
     public void testConvertIntegerToFour() {
         // TDD Etape 1 : Définir ce que l'on attend pour le cas '4' (soustraction)
         String expectedRoman = "IV";
