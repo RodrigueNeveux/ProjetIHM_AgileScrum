@@ -26,6 +26,20 @@ public class RomanConverterTest {
         String actualRoman = converter.convertIntegerToRoman(number);
         assertEquals(expectedRoman, actualRoman); // Doit passer (VERT)
     }
+
+@Test
+    public void testConvertIntegerToFour() {
+        // TDD Etape 1 : Définir ce que l'on attend pour le cas '4' (soustraction)
+        String expectedRoman = "IV";
+        int number = 4;
+// Echec attendu : le code actuel va retourner 'null' (ou 'IIII' si on enlève le 'if (number == 5)')
+        // L'implémentation actuelle retourne 'null' si l'entrée est 4.
+        String actualRoman = converter.convertIntegerToRoman(number);
+
+        // Assert: Le test doit échouer (expected:<IV> but was:<null>)
+        assertEquals(expectedRoman, actualRoman);
+    }
+
 @Test
     public void testConvertIntegerToTwo() {
         // TDD Etape 1 : Définir ce que l'on attend pour le cas '2'
