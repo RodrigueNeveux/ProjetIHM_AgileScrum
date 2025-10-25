@@ -10,6 +10,65 @@ import static org.junit.Assert.*;
 public class RomanConverterTest {
 // Initialisation de la classe de production à tester
     private RomanConverter converter = new RomanConverter();
+@Test
+    public void testConvertRomanToSix() {
+        assertEquals(6, converter.convertRomanToInteger("VI"));
+    }
+    @Test
+    public void testConvertRomanToTwelve() {
+        assertEquals(12, converter.convertRomanToInteger("XII"));
+    }
+@Test
+    public void testConvertRomanToFour() { // Devient IV -> 4
+        assertEquals(4, converter.convertRomanToInteger("IV"));
+    }
+    @Test
+    public void testConvertRomanToNine() { // Devient IX -> 9
+        assertEquals(9, converter.convertRomanToInteger("IX"));
+    }
+@Test
+    public void testConvertRomanToFifty() {
+        assertEquals(50, converter.convertRomanToInteger("L"));
+    }
+    @Test
+    public void testConvertRomanToForty() {
+        assertEquals(40, converter.convertRomanToInteger("XL"));
+    }
+@Test
+    public void testConvertRomanToBigNumber() {
+        assertEquals(1994, converter.convertRomanToInteger("MCMXCIV"));
+    }
+    @Test
+    public void testConvertRomanToLimit() { // Test de la limite du projet
+        assertEquals(2000, converter.convertRomanToInteger("MM"));
+    }
+// Test de la plage (US 3 - Échec prévu pour l'IHM)
+    @Test(expected = IllegalArgumentException.class)
+    public void testConvertRomanToInvalidRange() {
+         converter.convertRomanToInteger("MMI"); // 2001
+    }
+
+
+@Test
+    public void testConvertRomanToFive() {
+        // TDD Etape 1 : Définir ce que l'on attend pour le cas 'V'
+        int expectedInteger = 5;
+        String roman = "V";
+
+        // Le code de production actuel retourne '0' car il ne gère que 'I'.
+        int actualInteger = converter.convertRomanToInteger(roman);
+
+        // Assert: Le test doit échouer (expected:<5> but was:<0>)
+        assertEquals(expectedInteger, actualInteger);
+    }
+@Test
+    public void testConvertRomanToOne() {
+        // TDD Etape 1 : Définir ce que l'on attend pour le cas simple ('I')
+        int expectedInteger = 1;
+        String roman = "I";
+int actualInteger = converter.convertRomanToInteger(roman);
+assertEquals(expectedInteger, actualInteger);
+    }
 
 @Test
     public void testConvertIntegerToTwelve() {
