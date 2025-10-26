@@ -16,7 +16,15 @@
     <url-pattern>/calculatorInsset/exemple</url-pattern>
   </servlet-mapping>
 
+<servlet>
+        <servlet-name>financialService</servlet-name>
+        <servlet-class>org.insset.server.FinancialCalculatorServiceImpl</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>financialService</servlet-name>
+        <url-pattern>/calculatorInsset/financialService</url-pattern> 
+    </servlet-mapping>
   <servlet>
     <servlet-name>romanConvert</servlet-name>
     <servlet-class>org.insset.server.RomanConverterServiceImpl</servlet-class>

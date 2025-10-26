@@ -1,25 +1,18 @@
 package org.insset.server.romain;
 
-import java.util.HashMap; // Ajout nécessaire
-import java.util.Map;     // Ajout nécessaire
-import java.util.NoSuchElementException; // Utile pour les erreurs futures
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * Logique métier pour la conversion de nombres Romains et Arabes.
- */
 public class RomanConverter {
 
-    // -------------------------------------------------------------------------
-    // DECLARATIONS STATIQUES ET MAPS (UTILISÉES PAR LES DEUX MÉTHODES)
-    // -------------------------------------------------------------------------
-    private static final int[] VALUES = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+    // DECLARATIONS STATIQUES (Algorithme Glouton)
+private static final int[] VALUES = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
     private static final String[] SYMBOLS = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
-// Map statique pour la conversion inverse (Romain -> Entier)
+    
     private static final Map<Character, Integer> ROMAN_MAP = new HashMap<>();
-
-    static {
-        // Initialisation des valeurs (US 2)
-ROMAN_MAP.put('I', 1);
+static {
+        // Initialisation des valeurs pour la conversion inverse
+        ROMAN_MAP.put('I', 1);
         ROMAN_MAP.put('V', 5);
         ROMAN_MAP.put('X', 10);
         ROMAN_MAP.put('L', 50);
@@ -27,57 +20,71 @@ ROMAN_MAP.put('I', 1);
         ROMAN_MAP.put('D', 500);
         ROMAN_MAP.put('M', 1000);
     }
-    // -------------------------------------------------------------------------
-/**
-     * Convertit un nombre arabe (entier) en chiffre romain. (US 1)
-     * (Logique Algorithme Glouton complète et validée).
+    
+    /**
+* Convertit un nombre arabe (entier) en chiffre romain. (US 1)
      */
     public String convertIntegerToRoman(int number) {
         if (number <= 0 || number > 2000) {
             throw new IllegalArgumentException("La valeur doit être un nombre compris entre 1 et 2000.");
         }
 StringBuilder result = new StringBuilder();
-        // Algorithme glouton : soustraire la plus grande valeur possible
+        int remaining = number;
         for (int i = 0; i < VALUES.length; i++) {
-            while (number >= VALUES[i]) {
+            while (remaining >= VALUES[i]) {
                 result.append(SYMBOLS[i]);
-                number -= VALUES[i];
+                remaining -= VALUES[i];
             }
         }
-        return result.toString();
-} 
+return result.toString();
+    } 
 
     /**
      * Convertit un chiffre romain en entier. (US 2)
-     * (Phase ROUGE/VERT pour la composition 'VI').
      */
     public int convertRomanToInteger(String roman) {
-        // Le test 'VI' va passer avec cet algorithme (V+I = 6)
-        if (roman == null || roman.isEmpty()) {
-            return 0; // Gère les cas vides pour le moment
+        if (roman == null|| roman.isEmpty()) {
+            return 0;
         }
-// TDD Phase ROUGE : Implémentation algorithmique
+
         int result = 0;
         int previousValue = 0;
 
-        // Parcourir la chaîne romaine de droite à gauche
         for (int i = roman.length() - 1; i >= 0; i--) {
-            // Utiliser getOrDefault (romain est en Majuscule, donc pas de souci)
-            int currentValue = ROMAN_MAP.getOrDefault(roman.charAt(i), 0);
-if (currentValue < previousValue) {
-                // Règle de soustraction (ex: I avant V ou X)
+int currentValue = ROMAN_MAP.getOrDefault(roman.charAt(i), 0);
+            
+            if (currentValue < previousValue) {
                 result -= currentValue;
             } else {
-                // Règle d'addition (standard)
                 result += currentValue;
             }
-previousValue = currentValue;
+            previousValue = currentValue;
         }
-if (result < 1 || result > 2000) {
-            // Fait passer le test 'testConvertRomanToInvalidRange'
+// US 3: Validation de la plage après conversion
+        if (result < 1 || result > 2000) {
             throw new IllegalArgumentException("La valeur convertie est hors de la plage valide [1-2000].");
         }
-        
         return result; 
+    } 
+    
+    /**
+     * Valide le format de la date (jj/mm/aaaa) et la convertit. (Portée finale)
+     */
+public String convertBirthDateToRoman(String dateStr) throws IllegalArgumentException {
+        // Validation stricte du format jj/mm/aaaa (Exigence finale)
+        if (!dateStr.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            throw new IllegalArgumentException("Le format de la date doit être jj/mm/aaaa.");
+        }
+
+        try {
+            String[] parts = dateStr.split("/");
+String dayRoman = convertIntegerToRoman(Integer.parseInt(parts[0]));
+            String monthRoman = convertIntegerToRoman(Integer.parseInt(parts[1]));
+            String yearRoman = convertIntegerToRoman(Integer.parseInt(parts[2]));
+            
+            return dayRoman + "/" + monthRoman + "/" + yearRoman;
+        } catch (NumberFormatException e) {
+             throw new IllegalArgumentException("La date contient des valeurs numériques invalides.");
+        }
     }
 }
